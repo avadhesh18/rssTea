@@ -314,7 +314,7 @@ navigator.mediaSession.setActionHandler(
             const x = (canvas.width - iconImage.width) / 2;
             const y = (canvas.height - iconImage.height) / 2;
 
-            ctx.drawImage(iconImage, x, y);
+            ctx.drawImage(iconImage, x, y); 
 
             const imageDataURL = canvas.toDataURL('image/png');
 
@@ -323,6 +323,8 @@ navigator.mediaSession.setActionHandler(
             appleTouchStartupImageLink.setAttribute('href', imageDataURL);
             document.head.appendChild(appleTouchStartupImageLink);
         };
+        
+        alert('s'+screen.width+'s'+screen.height+'w'+window.innerWidth+'w'+window.innerHeight+'c'+document.documentElement.clientWidth+'c'+document.documentElement.clientHeight+);
 </script>
 </body>
 </html>
