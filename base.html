@@ -293,6 +293,36 @@ navigator.mediaSession.setActionHandler(
   
   
 });
+
+ 
+        const deviceWidth = window.innerWidth;
+        const deviceHeight = window.innerHeight;
+        const pixelRatio = window.devicePixelRatio || 1;
+
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = deviceWidth * pixelRatio;
+        canvas.height = deviceHeight * pixelRatio;
+
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const iconImage = new Image();
+        iconImage.src = 'apple-touch-icon.png';
+
+        iconImage.onload = function () {
+            const x = (canvas.width - iconImage.width) / 2;
+            const y = (canvas.height - iconImage.height) / 2;
+
+            ctx.drawImage(iconImage, x, y);
+
+            const imageDataURL = canvas.toDataURL('image/png');
+
+            const appleTouchStartupImageLink = document.createElement('link');
+            appleTouchStartupImageLink.setAttribute('rel', 'apple-touch-startup-image');
+            appleTouchStartupImageLink.setAttribute('href', imageDataURL);
+            document.head.appendChild(appleTouchStartupImageLink);
+        };
 </script>
 </body>
 </html>
