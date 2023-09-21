@@ -1,0 +1,241 @@
+<!DOCTYPE html><html><head>
+    <title>rssTea - RSS Reader Web App Hosted On Github</title>
+    <meta name="description" content="rdx is a fast, lightweight RSS and podcast Web Viewer that can be hosted On Github Pages."/>
+    <link rel="shortcut icon" href="favicon.ico"> 
+  <link rel="icon" href="favicon.png">
+<link rel="manifest" href="manifest.json" />
+ <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="rdx" />
+    <meta   name="apple-mobile-web-app-status-bar-style" content="default" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="theme.css" type="text/css">
+</head>
+<body>
+<div id="header">rssTea</div>
+<div id="filter"><span id="filters">
+<span class="tab active">All</span>
+<span class="tab">Posts</span>
+<span class="tab">Podcasts</span>
+<select name="changechannel"><!-- options here --></select></span></div>
+<div id="wrap">
+<!-- posts here -->
+</div>
+
+<div id="floating_player">
+<div class="player_meta"><button id="playpausebutton">Play</button><span id="title">Not Playing</span> <button id="speed">1x</button><button id="plus30">+30s</button></div>
+  <div id="timeline_wrap">
+  <ul id="chapters"></ul>
+    <span id="current_time"></span>
+    <span id="timeline">
+<input type="range" id="seekbar" min="0" max="100" step="0.1">
+</span>
+    <span id="duration"></span>
+  </div>
+</div>
+
+<script>
+const tabs = document.querySelectorAll('.tab');
+const posts = document.querySelectorAll('.post');
+const select = document.querySelector('select[name="changechannel"]');
+let selectedChannel = 'All';
+
+select.addEventListener('change', () => {
+  selectedChannel = select.value;
+  posts.forEach(post => {
+    const channel = post.getAttribute('data-channel');
+    if (selectedChannel === 'All' || channel === selectedChannel) {
+      post.style.display = 'block';
+    } else {
+      post.style.display = 'none';
+    }
+  });
+  tabs.forEach(tab => {
+      tab.classList.remove('active');
+        select.classList.add('selected');
+    });
+
+});
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(tab => {
+      tab.classList.remove('active');
+    });
+    tab.classList.add('active');
+    const filter = tab.textContent.trim();
+    posts.forEach(post => {
+      const audio = parseInt(post.getAttribute('data-audio'));
+      const channel = post.getAttribute('data-channel');
+      if (filter === 'All' || (filter === 'Posts' && audio === 0) || (filter === 'Podcasts' && audio === 1)) {
+        post.style.display = 'block';
+      } else {
+        post.style.display = 'none';
+      }
+    });
+    
+    select.value = 'All';
+     select.classList.remove('selected');
+  });
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const btns = document.querySelectorAll('.audio button[data-aid]');
+  let caudio = null;
+  let ppBtn = null;
+  const fpBtn = document.querySelector('#floating_player #playpausebutton');
+  const tl = document.querySelector('#timeline');
+  const fsb = document.querySelector('#seekbar');
+
+  fpBtn.addEventListener('click', function() {
+    togglePP();
+  });
+
+  function togglePP() {
+    if (caudio && caudio.paused) {
+      caudio.play();
+    } else if (caudio) {
+      caudio.pause();
+    }
+  }
+
+  tl.addEventListener('input', function(e) {
+   const seekPercentage = fsb.value;
+  const seekTime = (seekPercentage / 100) * caudio.duration;
+  caudio.currentTime = seekTime;
+  });
+
+  const speeds = [1, 1.2, 1.5, 1.75, 2];
+  let currentSpeedIndex = 0;
+  document.getElementById('speed').addEventListener('click', () => {
+    currentSpeedIndex = (currentSpeedIndex + 1) % speeds.length;
+    const speed = speeds[currentSpeedIndex];
+    caudio.playbackRate = speed;
+    document.getElementById('speed').innerText = speed + 'x';
+  });
+    document.getElementById('plus30').addEventListener('click', () => {
+    caudio.currentTime += 30;
+  });
+
+  function updateAudioTime() {
+    const currentTime = caudio.currentTime;
+    const formattedCurrentTime = formatTime(currentTime);
+    const formattedDuration = formatTime(caudio.duration);
+
+    document.getElementById('current_time').textContent = formattedCurrentTime;
+    document.getElementById('duration').textContent = formattedDuration;
+    const progress = (currentTime / caudio.duration) * 100;
+      fsb.value = progress;
+  }
+
+  function playTime() {
+    toggleClass(fpBtn, 'playing');
+    toggleClass(ppBtn, 'playing');
+  }
+
+  function formatTime(time) {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
+  }
+
+  btns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const aid = this.getAttribute('data-aid');
+      const audioElem = document.querySelector('audio[aid="' + aid + '"]');
+      changePlayback(audioElem);
+      });
+  });
+  function changePlayback(audioElem){
+      const prevPPBtn = ppBtn;
+      ppBtn = document.querySelector('[data-aid="'+audioElem.getAttribute('aid')+'"]');
+      const src = audioElem.getAttribute('src');
+
+      if (caudio && caudio !== audioElem) {
+        caudio.removeEventListener('timeupdate', updateAudioTime);
+        caudio.removeEventListener('play', playTime);
+        caudio.removeEventListener('pause', playTime);
+        caudio.pause();
+        prevPPBtn.classList.remove('playing');
+        fpBtn.classList.remove('playing');
+        fsb.value = '0';
+
+        if (audioElem.readyState >= 1) {
+          startPlayback(audioElem);
+        } else {
+          audioElem.addEventListener('loadedmetadata', function() {
+            startPlayback(audioElem);
+          });
+        }
+      } else if (caudio) {
+        togglePP();
+      } else {
+        if (audioElem.readyState >= 1) {
+          startPlayback(audioElem);
+        } else {
+          audioElem.addEventListener('loadedmetadata', function() {
+            startPlayback(audioElem);
+          });
+        }
+      }
+  }
+  function startPlayback(audioElem) {
+    
+    const fp = document.querySelector('#floating_player');
+    const closestPost = audioElem.closest('.post');
+    document.querySelectorAll('.post.nowplaying').forEach(e => e.classList.remove('nowplaying'));
+    closestPost.classList.add('nowplaying');
+    const h2text = closestPost.querySelector('h2').textContent;
+    document.getElementById('title').innerHTML = h2text;
+    caudio = audioElem;
+    caudio.addEventListener('timeupdate', updateAudioTime);
+    caudio.addEventListener('play', playTime);
+    caudio.addEventListener('pause', playTime);
+
+    const audioDur = caudio.duration;
+    const formattedDur = formatTime(audioDur);
+    document.getElementById('duration').textContent = formattedDur;
+    fp.style.display = 'block';
+    setTimeout(function() {
+  fp.classList.add("show");
+}, 10);
+    caudio.play();
+    document.getElementById('speed').innerText = caudio.playbackRate + 'x';
+    navigator.mediaSession.metadata = new MediaMetadata({
+    title: h2text,
+    artist: closestPost.querySelector('.channel').textContent,
+    album: "rssTea",
+    artwork: [{ src: closestPost.querySelector('img').src }],
+  });
+  const totalAids = document.querySelectorAll('[data-aid]').length;
+  let nextAid = Math.floor(audioElem.getAttribute('aid'))+1;
+  let prevAid = Math.floor(audioElem.getAttribute('aid'))-1;
+  if(nextAid > totalAids-1) { nextAid  = 0;}
+  if(prevAid < 0) { prevAid  = totalAids-1;}
+  console.log('nn'+nextAid);
+  console.log('pp'+prevAid);
+  navigator.mediaSession.setActionHandler(
+    'nexttrack',
+    () => {    changePlayback(document.querySelector("[aid=\""+nextAid+"\"]"));    
+    }
+);
+navigator.mediaSession.setActionHandler(
+    'previoustrack',
+    () => {  changePlayback(document.querySelector("[aid=\""+prevAid+"\"]")); 
+    }
+);
+  }
+
+  function toggleClass(element, className) {
+    if (element.classList.contains(className)) {
+      element.classList.remove(className);
+    } else {
+      element.classList.add(className);
+    }
+  }
+  
+});
+</script>
+</body>
+</html>

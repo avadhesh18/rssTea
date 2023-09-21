@@ -1,0 +1,14 @@
+https://www.reddit.com/r/technology.xml
+https://www.youtube.com/feeds/videos.xml?channel_id=UC-6OW5aJYBFM33zXQlBKPNA
+https://www.theverge.com/rss/tech/index.xml
+https://css-tricks.com/feed/
+https://news.ycombinator.com/rss
+https://feeds.feedburner.com/WhenCanIUse
+https://feeds.simplecast.com/ob9OSBIN
+https://mastodon.social/@neilhimself.rss
+https://nitter.net/chriscoyier/rss
+https://github.com/libreddit/libreddit/commits.atom
+https://feeds.simplecast.com/54nAGcIl
+https://feeds.simplecast.com/AeLYwXNc
+https://wordpress.org/news/feed/podcast
+https://codegolf.stackexchange.com/feeds

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Podcast Search</title>
+  <style>
+    #results {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Podcast Search</h1>
+  <input type="text" id="keywordInput" placeholder="Enter a keyword">
+  <button id="searchButton">Search</button>
+  <ol id="results"></ol>
+
+  <script>
+    async function searchPodcasts(keyword) {
+      const searchUrl = `https://itunes.apple.com/search?media=podcast&term=${encodeURIComponent(keyword)}`;
+
+      try {
+        const response = await fetch(searchUrl);
+        const data = await response.json();
+
+        // Extract podcast details from the response
+        const podcasts = data.results.map(podcast => {
+          return {
+            feedUrl: podcast.feedUrl,
+            title: podcast.collectionName,
+            image: podcast.artworkUrl100
+          };
+        });
+
+        return podcasts;
+      } catch (error) {
+        console.log('Error searching podcasts:', error);
+        return [];
+      }
+    }
+
+    document.getElementById('searchButton').addEventListener('click', async function() {
+      const keyword = document.getElementById('keywordInput').value;
+      const resultsContainer = document.getElementById('results');
+      resultsContainer.innerHTML = '';
+
+      if (keyword.trim() === '') {
+        return;
+      }
+
+      const podcasts = await searchPodcasts(keyword);
+
+      podcasts.forEach(podcast => {
+        const listItem = document.createElement('li');
+        const titleElement = document.createElement('h3');
+        titleElement.textContent = podcast.title;
+
+        const imageElement = document.createElement('img');
+        imageElement.src = podcast.image;
+        imageElement.alt = podcast.title;
+
+        const feedLink = document.createElement('a');
+        feedLink.href = podcast.feedUrl;
+        feedLink.textContent = 'Go to feed';
+
+        listItem.appendChild(titleElement);
+        listItem.appendChild(imageElement);
+        listItem.appendChild(feedLink);
+
+        resultsContainer.appendChild(listItem);
+      });
+    });
+  </script>
+</body>
+</html>
