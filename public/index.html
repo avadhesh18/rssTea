@@ -36,9 +36,6 @@
 <div class="post" data-channel="The Verge -  Teches" data-ts="1695289210" data-audio="0"><div class="leftpan"><img src="https://cdn.vox-cdn.com/thumbor/-ufMhfJtYLqWcMxcIXNpjZz1en4=/0x0:3000x2000/1310x873/cdn.vox-cdn.com/uploads/chorus_image/image/72671715/iFixit_Google_Pixel_Fold.0.jpg" alt="Pixel Fold replacement parts and iFixit repair guides now available"/ ></div><div class="rightpan"><div class="feedname"><span class="channel">The Verge -  Teches</span> &bull; <span class="date">Sep 21, 2023</span></div>
 <h2><a href="https://www.theverge.com/2023/9/21/23883578/pixel-fold-ifixit-replacement-parts-repair-guides-price" target="_blank">Pixel Fold replacement parts and iFixit repair guides now available</a></h2>
 </div></div>
-<div class="post" data-channel="Hacker News" data-ts="1695282974" data-audio="0"><div class="leftpan"><img src="https://s2.googleusercontent.com/s2/favicons?domain=erlangforums.com" alt="Erlang/OTP 26.1 Released"/><span class="domain">erlangforums.com</span></div><div class="rightpan"><div class="feedname"><span class="channel">Hacker News</span> &bull; <span class="date">Sep 21, 2023</span></div>
-<h2><a href="https://erlangforums.com/t/erlang-otp-26-1-released/2886" target="_blank">Erlang/OTP 26.1 Released</a></h2>
-</div></div>
 <div class="post" data-channel="Hacker News" data-ts="1695281791" data-audio="0"><div class="leftpan"><img src="https://s2.googleusercontent.com/s2/favicons?domain=www.undeadly.org" alt="OpenBSD/ARM64 on Hetzner Cloud"/><span class="domain">www.undeadly.org</span></div><div class="rightpan"><div class="feedname"><span class="channel">Hacker News</span> &bull; <span class="date">Sep 21, 2023</span></div>
 <h2><a href="https://www.undeadly.org/cgi?action=article;sid=20230921073556" target="_blank">OpenBSD/ARM64 on Hetzner Cloud</a></h2>
 </div></div>
@@ -65,6 +62,9 @@
 </div></div>
 <div class="post" data-channel="/r/Technology" data-ts="1695235289" data-audio="0"><div class="leftpan"><img src="https://external-preview.redd.it/DvIif9SPBYHlNO879XtIG38acnLHd2pbAzG5_8MvXZY.jpg?width=640&crop=smart&auto=webp&s=ebd8b5e0ed4b6e11854b00e5f201d4fd3cb8baec" alt="John Grisham, George R.R. Martin and more authors sue OpenAI for copyright infringement"/ ></div><div class="rightpan"><div class="feedname"><span class="channel">/r/Technology</span> &bull; <span class="date">Sep 20, 2023</span></div>
 <h2><a href="https://www.reddit.com/r/technology/comments/16nsyof/john_grisham_george_rr_martin_and_more_authors/" target="_blank">John Grisham, George R.R. Martin and more authors sue OpenAI for copyright infringement</a></h2>
+</div></div>
+<div class="post" data-channel="Hacker News" data-ts="1695227526" data-audio="0"><div class="leftpan"><img src="https://s2.googleusercontent.com/s2/favicons?domain=machines-reading-maps.github.io" alt="Guide to Searching and Annotating Text on Maps"/><span class="domain">machines-reading-maps.github.io</span></div><div class="rightpan"><div class="feedname"><span class="channel">Hacker News</span> &bull; <span class="date">Sep 20, 2023</span></div>
+<h2><a href="https://machines-reading-maps.github.io/rumsey/" target="_blank">Guide to Searching and Annotating Text on Maps</a></h2>
 </div></div>
 <div class="post" data-channel="Hacker News" data-ts="1695206916" data-audio="0"><div class="leftpan"><img src="https://s2.googleusercontent.com/s2/favicons?domain=developers.redhat.com" alt="Introduction to Linux interfaces for virtual networking (2018)"/><span class="domain">developers.redhat.com</span></div><div class="rightpan"><div class="feedname"><span class="channel">Hacker News</span> &bull; <span class="date">Sep 20, 2023</span></div>
 <h2><a href="https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking" target="_blank">Introduction to Linux interfaces for virtual networking (2018)</a></h2>
@@ -385,9 +385,16 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function playTime() {
+    navigator.mediaSession.playbackState = 'playing';
     fpbtn.classList.toggle('playing');
     ppBtn.classList.toggle('playing');
   }
+   function playTime() {
+    navigator.mediaSession.playbackState = 'paused';
+    fpbtn.classList.toggle('playing');
+    ppBtn.classList.toggle('playing');
+  }
+  
 
   function formatTime(time) {
     const minutes = Math.floor(time / 60);
@@ -410,8 +417,9 @@ document.addEventListener('DOMContentLoaded', function() {
       if (caudio && caudio !== audioElem) {
         caudio.removeEventListener('timeupdate', updateAudioTime);
         caudio.removeEventListener('play', playTime);
-        caudio.removeEventListener('pause', playTime);
+        caudio.removeEventListener('pause', pauseTime);
         caudio.pause();
+
         prevPPBtn.classList.remove('playing');
         fpBtn.classList.remove('playing');
         fsb.value = '0';
@@ -446,8 +454,7 @@ document.addEventListener('DOMContentLoaded', function() {
     caudio = audioElem;
     caudio.addEventListener('timeupdate', updateAudioTime);
     caudio.addEventListener('play', playTime);
-    caudio.addEventListener('pause', playTime);
-
+    caudio.addEventListener('pause', pauseTime);
     const audioDur = caudio.duration;
     const formattedDur = formatTime(audioDur);
     document.getElementById('duration').textContent = formattedDur;
@@ -456,6 +463,7 @@ document.addEventListener('DOMContentLoaded', function() {
   fp.classList.add("show");
 }, 10);
     caudio.play();
+
     document.getElementById('speed').innerText = caudio.playbackRate + 'x';
     navigator.mediaSession.metadata = new MediaMetadata({
     title: h2text,
@@ -470,11 +478,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if(prevAid < 0) { prevAid  = totalAids-1;}
    navigator.mediaSession.setActionHandler("play", () => {
   caudio.play();
-  navigator.mediaSession.playbackState = "playing";
-
   });
   navigator.mediaSession.setActionHandler("pause", () => {
-   caudio.pause();
    navigator.mediaSession.playbackState = "paused";
   });
   navigator.mediaSession.setActionHandler("seekto", (details) => {
