@@ -113,6 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const speed = speeds[currentSpeedIndex];
     caudio.playbackRate = speed;
     document.getElementById('speed').innerText = speed + 'x';
+    updatePositionState();
   });
     document.getElementById('plus30').addEventListener('click', () => {
     caudio.currentTime += 30;
@@ -131,12 +132,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function playTime() {
     navigator.mediaSession.playbackState = 'playing';
-    fpbtn.classList.toggle('playing');
+    fpBtn.classList.toggle('playing');
     ppBtn.classList.toggle('playing');
+     updatePositionState();
   }
-   function playTime() {
+   function pauseTime() {
     navigator.mediaSession.playbackState = 'paused';
-    fpbtn.classList.toggle('playing');
+    fpBtn.classList.toggle('playing');
     ppBtn.classList.toggle('playing');
   }
   
@@ -160,11 +162,11 @@ document.addEventListener('DOMContentLoaded', function() {
       const src = audioElem.getAttribute('src');
 
       if (caudio && caudio !== audioElem) {
+        caudio.pause();
         caudio.removeEventListener('timeupdate', updateAudioTime);
         caudio.removeEventListener('play', playTime);
         caudio.removeEventListener('pause', pauseTime);
-        caudio.pause();
-
+        
         prevPPBtn.classList.remove('playing');
         fpBtn.classList.remove('playing');
         fsb.value = '0';
@@ -188,6 +190,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       }
   }
+  function updatePositionState() {
+  navigator.mediaSession.setPositionState({
+    duration: caudio.duration,
+    playbackRate: caudio.playbackRate,
+    position: caudio.currentTime,
+  });
+}
   function startPlayback(audioElem) {
     
     const fp = document.querySelector('#floating_player');
@@ -225,27 +234,21 @@ document.addEventListener('DOMContentLoaded', function() {
   caudio.play();
   });
   navigator.mediaSession.setActionHandler("pause", () => {
-   navigator.mediaSession.playbackState = "paused";
+     caudio.pause();
   });
-  navigator.mediaSession.setActionHandler("seekto", (details) => {
-  if (details.fastSeek && caudio) {
-    const newTime = details.seekTime || 0;
-    caudio.currentTime = newTime;
-  } else if (caudio) {
-    const currentTime = caudio.currentTime || 0;
-    const seekTime = details.seekTime || 0;
-    caudio.currentTime = currentTime + seekTime;
-  }
-});
-let skipTime = 30;
- navigator.mediaSession.setActionHandler("seekbackward", (evt) => {
-  caudio.currentTime = Math.max(caudio.currentTime - skipTime, 0);
- });
+ // navigator.mediaSession.setActionHandler("seekto", (details) => {
+ //     console.log(details);
+//  if (details.fastSeek && caudio) {
+   // const newTime = details.seekTime || 0;
+   // caudio.currentTime = newTime;
+//  } else if (caudio) {
+   // const currentTime = caudio.currentTime || 0;
+  //  const seekTime = details.seekTime || 0;
+  //  caudio.currentTime = currentTime + seekTime;
+//  }
+//});
 
- navigator.mediaSession.setActionHandler("seekforward", (evt) => {
-   caudio.currentTime = Math.min(caudio.currentTime + skipTime, caudio.duration);
- });
-
+  
   navigator.mediaSession.setActionHandler(
     'nexttrack',
     () => {    changePlayback(document.querySelector("[aid=\""+nextAid+"\"]"));    
@@ -256,7 +259,17 @@ navigator.mediaSession.setActionHandler(
     () => {  changePlayback(document.querySelector("[aid=\""+prevAid+"\"]")); 
     }
 );
+  navigator.mediaSession.setActionHandler('seekbackward', (details) => {
+    caudio.currentTime = caudio.currentTime - (details.seekOffset || 10);
+    updatePositionState();
+  });
+  navigator.mediaSession.setActionHandler('seekforward', (details) => {
+    caudio.currentTime = caudio.currentTime + (details.seekOffset || 10);
+    updatePositionState();
+  });
+
   }
+  
   
 });
 </script>
