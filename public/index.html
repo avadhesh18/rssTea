@@ -40,6 +40,9 @@
 <div class="post" data-channel="Hacker News" data-ts="1695315968" data-audio="0"><div class="leftpan"><img src="https://s2.googleusercontent.com/s2/favicons?domain=faq.usps.com" alt="USPS In-Person Identity Proofing"/><span class="domain">faq.usps.com</span></div><div class="rightpan"><div class="feedname"><span class="channel">Hacker News</span> &bull; <span class="date">Sep 21, 2023</span></div>
 <h2><a href="https://faq.usps.com/s/article/USPS-In-Person-Identity-Proofing" target="_blank">USPS In-Person Identity Proofing</a></h2>
 </div></div>
+<div class="post" data-channel="/r/Technology" data-ts="1695311608" data-audio="0"><div class="leftpan"><img src="https://external-preview.redd.it/TSPhxMGEgW9hrEWPvzy28iN1HhHCc9voZi1PloOnUCc.jpg?width=640&crop=smart&auto=webp&s=7a21a7e9f9b0884b9e7c5225d105fa80555288a1" alt="Judge “in a pickle” after Google demands DOJ stop sharing public trial exhibits"/ ></div><div class="rightpan"><div class="feedname"><span class="channel">/r/Technology</span> &bull; <span class="date">Sep 21, 2023</span></div>
+<h2><a href="https://www.reddit.com/r/technology/comments/16ojh6n/judge_in_a_pickle_after_google_demands_doj_stop/" target="_blank">Judge “in a pickle” after Google demands DOJ stop sharing public trial exhibits</a></h2>
+</div></div>
 <div class="post" data-channel="Hacker News" data-ts="1695311604" data-audio="0"><div class="leftpan"><img src="https://s2.googleusercontent.com/s2/favicons?domain=matrix.org" alt="Matrix 2.0: The Future of Matrix"/><span class="domain">matrix.org</span></div><div class="rightpan"><div class="feedname"><span class="channel">Hacker News</span> &bull; <span class="date">Sep 21, 2023</span></div>
 <h2><a href="https://matrix.org/blog/2023/09/matrix-2-0/" target="_blank">Matrix 2.0: The Future of Matrix</a></h2>
 </div></div>
@@ -65,9 +68,6 @@
 </div></div>
 <div class="post" data-channel="/r/Technology" data-ts="1695259767" data-audio="0"><div class="leftpan"><img src="https://external-preview.redd.it/A2Ucgc7HY66uPBZA7zBbPtz6UI91asVFqrk40V9JNeQ.jpg?width=640&crop=smart&auto=webp&s=1b8a0ead6ec900fdaced169d4f2ac2aadcd90c2f" alt="Remember when NFTs sold for millions of dollars? 95% of the digital collectibles are now probably worthless."/ ></div><div class="rightpan"><div class="feedname"><span class="channel">/r/Technology</span> &bull; <span class="date">Sep 21, 2023</span></div>
 <h2><a href="https://www.reddit.com/r/technology/comments/16o2png/remember_when_nfts_sold_for_millions_of_dollars/" target="_blank">Remember when NFTs sold for millions of dollars? 95% of the digital collectibles are now probably worthless.</a></h2>
-</div></div>
-<div class="post" data-channel="/r/Technology" data-ts="1695235289" data-audio="0"><div class="leftpan"><img src="https://external-preview.redd.it/DvIif9SPBYHlNO879XtIG38acnLHd2pbAzG5_8MvXZY.jpg?width=640&crop=smart&auto=webp&s=ebd8b5e0ed4b6e11854b00e5f201d4fd3cb8baec" alt="John Grisham, George R.R. Martin and more authors sue OpenAI for copyright infringement"/ ></div><div class="rightpan"><div class="feedname"><span class="channel">/r/Technology</span> &bull; <span class="date">Sep 20, 2023</span></div>
-<h2><a href="https://www.reddit.com/r/technology/comments/16nsyof/john_grisham_george_rr_martin_and_more_authors/" target="_blank">John Grisham, George R.R. Martin and more authors sue OpenAI for copyright infringement</a></h2>
 </div></div>
 <div class="post" data-channel="The Daily" data-ts="1695203100" data-audio="1"><div class="leftpan"><img src="https://image.simplecastcdn.com/images/03d8b493-87fc-4bd1-931f-8a8e9b945d8a/2cce5659-f647-4366-b318-46e4b67afcfa/3000x3000/c81936f538106550b804e7e4fe2c236319bab7fba37941a6e8f7e5c3d3048b88fc5b2182fb790f7d446bdc820406456c94287f245db89d8656c105d5511ec3de.jpeg?aid=rss_feed" alt="Is College Worth It?"/ ></div><div class="rightpan"><div class="feedname"><span class="channel">The Daily</span> &bull; <span class="date">Sep 20, 2023</span></div>
 <h2><a href="https://www.nytimes.com/the-daily" target="_blank">Is College Worth It?</a></h2><div class="audio">
@@ -535,8 +535,8 @@ navigator.mediaSession.setActionHandler(
 });
 
   
-        const deviceWidth = window.innerWidth;
-        const deviceHeight = window.innerHeight;
+        const deviceWidth = screen.width;
+        const deviceHeight = screen.height;
         const pixelRatio = window.devicePixelRatio || 1;
 
         const canvas = document.createElement('canvas');
@@ -562,9 +562,8 @@ navigator.mediaSession.setActionHandler(
             appleTouchStartupImageLink.setAttribute('rel', 'apple-touch-startup-image');
             appleTouchStartupImageLink.setAttribute('href', imageDataURL);
             document.head.appendChild(appleTouchStartupImageLink);
-        };
+        }; 
         
-        alert('s'+screen.width+'s'+screen.height+'w'+window.innerWidth+'w'+window.innerHeight+'c'+document.documentElement.clientWidth+'c'+document.documentElement.clientHeight+);
 </script>
 </body>
 </html>
