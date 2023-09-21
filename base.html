@@ -130,9 +130,16 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function playTime() {
+    navigator.mediaSession.playbackState = 'playing';
     fpbtn.classList.toggle('playing');
     ppBtn.classList.toggle('playing');
   }
+   function playTime() {
+    navigator.mediaSession.playbackState = 'paused';
+    fpbtn.classList.toggle('playing');
+    ppBtn.classList.toggle('playing');
+  }
+  
 
   function formatTime(time) {
     const minutes = Math.floor(time / 60);
@@ -155,8 +162,9 @@ document.addEventListener('DOMContentLoaded', function() {
       if (caudio && caudio !== audioElem) {
         caudio.removeEventListener('timeupdate', updateAudioTime);
         caudio.removeEventListener('play', playTime);
-        caudio.removeEventListener('pause', playTime);
+        caudio.removeEventListener('pause', pauseTime);
         caudio.pause();
+
         prevPPBtn.classList.remove('playing');
         fpBtn.classList.remove('playing');
         fsb.value = '0';
@@ -191,8 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
     caudio = audioElem;
     caudio.addEventListener('timeupdate', updateAudioTime);
     caudio.addEventListener('play', playTime);
-    caudio.addEventListener('pause', playTime);
-
+    caudio.addEventListener('pause', pauseTime);
     const audioDur = caudio.duration;
     const formattedDur = formatTime(audioDur);
     document.getElementById('duration').textContent = formattedDur;
@@ -201,6 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
   fp.classList.add("show");
 }, 10);
     caudio.play();
+
     document.getElementById('speed').innerText = caudio.playbackRate + 'x';
     navigator.mediaSession.metadata = new MediaMetadata({
     title: h2text,
@@ -215,11 +223,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if(prevAid < 0) { prevAid  = totalAids-1;}
    navigator.mediaSession.setActionHandler("play", () => {
   caudio.play();
-  navigator.mediaSession.playbackState = "playing";
-
   });
   navigator.mediaSession.setActionHandler("pause", () => {
-   caudio.pause();
    navigator.mediaSession.playbackState = "paused";
   });
   navigator.mediaSession.setActionHandler("seekto", (details) => {

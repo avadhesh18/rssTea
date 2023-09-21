@@ -16,7 +16,6 @@ echo "\n"."Getting feed from: ". $url." \n";
         CURLOPT_ENCODING => 'gzip',
         CURLOPT_FOLLOWLOCATION => true
     ]);
-
     $response = curl_exec($ch);
     $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     if (curl_errno($ch) || $httpcode != 200) {
