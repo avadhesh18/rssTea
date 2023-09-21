@@ -213,8 +213,34 @@ document.addEventListener('DOMContentLoaded', function() {
   let prevAid = Math.floor(audioElem.getAttribute('aid'))-1;
   if(nextAid > totalAids-1) { nextAid  = 0;}
   if(prevAid < 0) { prevAid  = totalAids-1;}
-  console.log('nn'+nextAid);
-  console.log('pp'+prevAid);
+   navigator.mediaSession.setActionHandler("play", () => {
+  caudio.play();
+  navigator.mediaSession.playbackState = "playing";
+
+  });
+  navigator.mediaSession.setActionHandler("pause", () => {
+   caudio.pause();
+   navigator.mediaSession.playbackState = "paused";
+  });
+  navigator.mediaSession.setActionHandler("seekto", (details) => {
+  if (details.fastSeek && caudio) {
+    const newTime = details.seekTime || 0;
+    caudio.currentTime = newTime;
+  } else if (caudio) {
+    const currentTime = caudio.currentTime || 0;
+    const seekTime = details.seekTime || 0;
+    caudio.currentTime = currentTime + seekTime;
+  }
+});
+let skipTime = 30;
+ navigator.mediaSession.setActionHandler("seekbackward", (evt) => {
+  caudio.currentTime = Math.max(caudio.currentTime - skipTime, 0);
+ });
+
+ navigator.mediaSession.setActionHandler("seekforward", (evt) => {
+   caudio.currentTime = Math.min(caudio.currentTime + skipTime, caudio.duration);
+ });
+
   navigator.mediaSession.setActionHandler(
     'nexttrack',
     () => {    changePlayback(document.querySelector("[aid=\""+nextAid+"\"]"));    
