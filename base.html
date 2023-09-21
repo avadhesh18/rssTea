@@ -228,6 +228,11 @@ document.addEventListener('DOMContentLoaded', function() {
     artist: closestPost.querySelector('.channel').textContent,
     album: "rssTea",
     artwork: [
+    {
+        src: mediaAlbumArt+'&resize_w=128&resize_h=128',
+        sizes: "128x128",
+        type: "image/png",
+      },
       {
         src: mediaAlbumArt+'&resize_w=96&resize_h=96',
         sizes: "96x96",
@@ -241,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
       {
         src: closestPost.querySelector('img').src,
       },      
-    ],
+    ], 
  }); 
     
    

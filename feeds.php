@@ -20,7 +20,7 @@ echo "\n"."Getting feed from: ". $url." \n";
     $response = curl_exec($ch);
     $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     if (curl_errno($ch) || $httpcode != 200) {
-         echo "\n"."Error loading feed from " . $url . ": " . $httpcode . " " . curl_error($ch) ." \n ";
+         echo "\n"."Error loading feed from " . $url . " " . $httpcode . " " . curl_error($ch) ." \n ";
          $feedn++;
         continue;
     }
