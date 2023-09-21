@@ -26,6 +26,7 @@ echo "\n"."Getting feed from: ". $url." \n";
     }
     curl_close($ch);
 
+
     $response = str_ireplace(array("media:thumbnail",'<media:group>','</media:group>'), array("thumbnail",'',''), $response);
     $feed = simplexml_load_string($response);
     if ($feed) {
@@ -142,4 +143,5 @@ file_put_contents('feed.json', json_encode($feeda));
 $template = file_get_contents('base.html');
 $html = str_replace(array('<!-- posts here -->','<!-- options here -->'),array($outhtml,$outoptions),$template);
 file_put_contents('public/index.html', $html);
+
 ?>
