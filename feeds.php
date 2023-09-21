@@ -144,4 +144,5 @@ $template = file_get_contents('base.html');
 $html = str_replace(array('<!-- posts here -->','<!-- options here -->'),array($outhtml,$outoptions),$template);
 file_put_contents('public/index.html', $html);
 
+
 ?>

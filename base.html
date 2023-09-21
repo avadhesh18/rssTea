@@ -219,17 +219,47 @@ document.addEventListener('DOMContentLoaded', function() {
     caudio.play();
 
     document.getElementById('speed').innerText = caudio.playbackRate + 'x';
+   // navigator.mediaSession.metadata = new MediaMetadata({
+  //  title: h2text,
+  //  artist: closestPost.querySelector('.channel').textContent,
+  //  album: "rssTea",
+  //  artwork: [{ src: closestPost.querySelector('img').src }],
+ // });
+  
+  let blobURL;
+const image = new Image();
+image.src = closestPost.querySelector('img').src;
+image.addEventListener('load', async () => {
+  const canvas = document.createElement('canvas');
+  canvas.width = 128;
+  canvas.height = 128;
+  const context = canvas.getContext('2d');
+  context.drawImage(image, 0, 0, canvas.width, canvas.height);
+  canvas.toBlob((blob) => {
+    if (!blob) return;
+    if (blobURL) URL.revokeObjectURL(blobURL);
+    blobURL = URL.createObjectURL(blob);
     navigator.mediaSession.metadata = new MediaMetadata({
-    title: h2text,
-    artist: closestPost.querySelector('.channel').textContent,
+      title: h2text,
+ artist: closestPost.querySelector('.channel').textContent,
     album: "rssTea",
-    artwork: [{ src: closestPost.querySelector('img').src }],
+      artwork: [
+        {
+          src: blobURL,
+          type: blob.type,
+          sizes: `${canvas.width}x${canvas.height}`
+        }
+      ]
+    });
   });
+});
+  
   const totalAids = document.querySelectorAll('[data-aid]').length;
   let nextAid = Math.floor(audioElem.getAttribute('aid'))+1;
   let prevAid = Math.floor(audioElem.getAttribute('aid'))-1;
   if(nextAid > totalAids-1) { nextAid  = 0;}
   if(prevAid < 0) { prevAid  = totalAids-1;}
+  
    navigator.mediaSession.setActionHandler("play", () => {
   caudio.play();
   });
