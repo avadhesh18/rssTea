@@ -220,17 +220,22 @@ document.addEventListener('DOMContentLoaded', function() {
   fp.classList.add("show");
 }, 10);
     caudio.play();
-
+ 
     document.getElementById('speed').innerText = caudio.playbackRate + 'x';
-    
+ const mediaAlbumArt = 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url='+encodeURIComponent(closestPost.querySelector('img').src)+'&container=focus';
    navigator.mediaSession.metadata = new MediaMetadata({
     title: h2text,
     artist: closestPost.querySelector('.channel').textContent,
     album: "rssTea",
     artwork: [
       {
-        src: "https://dummyimage.com/96x96",
+        src: mediaAlbumArt+'&resize_w=96&resize_h=96',
         sizes: "96x96",
+        type: "image/png",
+      },
+          {
+        src: mediaAlbumArt+'&resize_w=192&resize_h=192',
+        sizes: "192x192",
         type: "image/png",
       },
       {
@@ -238,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function() {
       },      
     ],
  }); 
-     
+    
    
   const totalAids = document.querySelectorAll('[data-aid]').length;
   let nextAid = Math.floor(audioElem.getAttribute('aid'))+1;
