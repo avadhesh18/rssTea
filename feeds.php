@@ -142,5 +142,5 @@ $outhtml .='
 file_put_contents('feed.json', json_encode($feeda));
 $template = file_get_contents('base.html');
 $html = str_replace(array('<!-- posts here -->','<!-- options here -->'),array($outhtml,$outoptions),$template);
-file_put_contents('out.html', $html);
+file_put_contents('public/index.html', $html);
 ?>
