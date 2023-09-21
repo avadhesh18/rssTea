@@ -306,6 +306,11 @@ navigator.mediaSession.setActionHandler(
         canvas.height = deviceHeight * pixelRatio;
 
         ctx.fillStyle = 'white';
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    ctx.fillStyle = 'black';
+
+}
+
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         const iconImage = new Image();
         iconImage.src = 'apple-touch-icon.png';
