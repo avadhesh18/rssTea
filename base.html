@@ -295,8 +295,8 @@ navigator.mediaSession.setActionHandler(
 });
 
   
-        const deviceWidth = window.innerWidth;
-        const deviceHeight = window.innerHeight;
+        const deviceWidth = screen.width;
+        const deviceHeight = screen.height;
         const pixelRatio = window.devicePixelRatio || 1;
 
         const canvas = document.createElement('canvas');
@@ -322,9 +322,8 @@ navigator.mediaSession.setActionHandler(
             appleTouchStartupImageLink.setAttribute('rel', 'apple-touch-startup-image');
             appleTouchStartupImageLink.setAttribute('href', imageDataURL);
             document.head.appendChild(appleTouchStartupImageLink);
-        };
+        }; 
         
-        alert('s'+screen.width+'s'+screen.height+'w'+window.innerWidth+'w'+window.innerHeight+'c'+document.documentElement.clientWidth+'c'+document.documentElement.clientHeight+);
 </script>
 </body>
 </html>
