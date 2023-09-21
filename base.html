@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
     <title>rssTea - RSS Reader Web App Hosted On Github</title>
-    <meta name="description" content="rdx is a fast, lightweight RSS and podcast Web Viewer that can be hosted On Github Pages."/>
+    <meta name="description" content="rssTea is a fast, lightweight RSS and podcast Web Viewer that can be hosted On Github Pages."/>
     <link rel="shortcut icon" href="favicon.ico"> 
   <link rel="icon" href="favicon.png">
 <link rel="manifest" href="manifest.json" />
@@ -130,8 +130,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function playTime() {
-    toggleClass(fpBtn, 'playing');
-    toggleClass(ppBtn, 'playing');
+    fpbtn.classList.toggle('playing');
+    ppBtn.classList.toggle('playing');
   }
 
   function formatTime(time) {
@@ -225,14 +225,6 @@ navigator.mediaSession.setActionHandler(
     () => {  changePlayback(document.querySelector("[aid=\""+prevAid+"\"]")); 
     }
 );
-  }
-
-  function toggleClass(element, className) {
-    if (element.classList.contains(className)) {
-      element.classList.remove(className);
-    } else {
-      element.classList.add(className);
-    }
   }
   
 });
