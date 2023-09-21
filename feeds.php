@@ -122,7 +122,7 @@ $outchannels[] = $post['ch'];
 $isaudio = !empty($post['audio']) ? 1 : 0;
 $outhtml .= '<div class="post" data-channel="'.$post['ch'].'" data-ts="'.$post['date'].'" data-audio="'.$isaudio.'">';
 if(!empty($post['image'])){
-$outhtml .= '<div class="leftpan"><img src="'.$post['image'].'" alt="'.$post['title'].'"/ ></div>';
+$outhtml .= '<div class="leftpan"><img src="'.$post['image'].'" alt="'.$post['title'].'" crossorigin="anonymous"/ ></div>';
 }
 else {
   $domain = parse_url($post['link'], PHP_URL_HOST);
