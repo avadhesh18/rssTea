@@ -28,6 +28,9 @@
 <div class="post" data-channel="The Verge -  Teches" data-ts="1695311157" data-audio="0"><div class="leftpan"><img src="https://cdn.vox-cdn.com/thumbor/8LWtVuocGMmm7r2nim73goPstuk=/0x0:2040x1360/1310x873/cdn.vox-cdn.com/uploads/chorus_image/image/72672917/DSCF3360.0.jpg" alt="Hands-on with the Surface Laptop Go 3"/ ></div><div class="rightpan"><div class="feedname"><span class="channel">The Verge -  Teches</span> &bull; <span class="date">Sep 21, 2023</span></div>
 <h2><a href="https://www.theverge.com/2023/9/21/23883904/surface-laptop-go-3-hands-on" target="_blank">Hands-on with the Surface Laptop Go 3</a></h2>
 </div></div>
+<div class="post" data-channel="Hacker News" data-ts="1695310828" data-audio="0"><div class="leftpan"><img src="https://s2.googleusercontent.com/s2/favicons?domain=www.livescience.com" alt="Sunken temple and sanctuary from ancient Egypt found"/><span class="domain">www.livescience.com</span></div><div class="rightpan"><div class="feedname"><span class="channel">Hacker News</span> &bull; <span class="date">Sep 21, 2023</span></div>
+<h2><a href="https://www.livescience.com/archaeology/ancient-egyptians/sunken-temple-and-sanctuary-from-ancient-egypt-found-brimming-with-treasures-and-secrets" target="_blank">Sunken temple and sanctuary from ancient Egypt found</a></h2>
+</div></div>
 <div class="post" data-channel="The Verge -  Teches" data-ts="1695310587" data-audio="0"><div class="leftpan"><img src="https://cdn.vox-cdn.com/thumbor/_FPSCkicF79Id72uIcM_JhlgNos=/0x0:2040x1360/1310x873/cdn.vox-cdn.com/uploads/chorus_image/image/72672884/DSC08260.0.jpg" alt="You can finally ask Siri to play Spotify on a HomePod"/ ></div><div class="rightpan"><div class="feedname"><span class="channel">The Verge -  Teches</span> &bull; <span class="date">Sep 21, 2023</span></div>
 <h2><a href="https://www.theverge.com/2023/9/21/23883860/siri-can-now-play-spotify-on-apple-homepod-smart-speaker" target="_blank">You can finally ask Siri to play Spotify on a HomePod</a></h2>
 </div></div>
@@ -45,9 +48,6 @@
 </div></div>
 <div class="post" data-channel="Hacker News" data-ts="1695298519" data-audio="0"><div class="leftpan"><img src="https://s2.googleusercontent.com/s2/favicons?domain=www.splunk.com" alt="Cisco Acquires Splunk"/><span class="domain">www.splunk.com</span></div><div class="rightpan"><div class="feedname"><span class="channel">Hacker News</span> &bull; <span class="date">Sep 21, 2023</span></div>
 <h2><a href="https://www.splunk.com/en_us/blog/leadership/splunk-and-cisco-unite-to-accelerate-digital-resilience-as-one-of-the-leading-global-software-companies.html" target="_blank">Cisco Acquires Splunk</a></h2>
-</div></div>
-<div class="post" data-channel="Hacker News" data-ts="1695296931" data-audio="0"><div class="leftpan"><img src="https://s2.googleusercontent.com/s2/favicons?domain=news.ycombinator.com" alt="Launch HN: Loops (YC W22) – Email for SaaS Companies"/><span class="domain">news.ycombinator.com</span></div><div class="rightpan"><div class="feedname"><span class="channel">Hacker News</span> &bull; <span class="date">Sep 21, 2023</span></div>
-<h2><a href="https://news.ycombinator.com/item?id=37596253" target="_blank">Launch HN: Loops (YC W22) – Email for SaaS Companies</a></h2>
 </div></div>
 <div class="post" data-channel="/r/Technology" data-ts="1695293627" data-audio="0"><div class="leftpan"><img src="https://external-preview.redd.it/e4h__yYrGQsa-GuSPG0816Lku99nDzfQBpJkrEsDiSw.jpg?width=640&crop=smart&auto=webp&s=226ab4525673caf1bc8a2fe6606392e7e386867a" alt="Microsoft AI team accidentally leaks 38TB of private company data"/ ></div><div class="rightpan"><div class="feedname"><span class="channel">/r/Technology</span> &bull; <span class="date">Sep 21, 2023</span></div>
 <h2><a href="https://www.reddit.com/r/technology/comments/16ocquj/microsoft_ai_team_accidentally_leaks_38tb_of/" target="_blank">Microsoft AI team accidentally leaks 38TB of private company data</a></h2>
@@ -474,32 +474,10 @@ document.addEventListener('DOMContentLoaded', function() {
         type: "image/png",
       },
       {
-        src: "https://dummyimage.com/128x128",
-        sizes: "128x128",
-        type: "image/png",
-      },
-      {
-        src: "https://dummyimage.com/192x192",
-        sizes: "192x192",
-        type: "image/png",
-      },
-      {
-        src: "https://dummyimage.com/256x256",
-        sizes: "256x256",
-        type: "image/png",
-      },
-      {
-        src: "https://dummyimage.com/384x384",
-        sizes: "384x384",
-        type: "image/png",
-      },
-      {
-        src: "https://dummyimage.com/512x512",
-        sizes: "512x512",
-        type: "image/png",
-      },
+        src: closestPost.querySelector('img').src;
+      },      
     ],
- });
+ }); 
    
   const totalAids = document.querySelectorAll('[data-aid]').length;
   let nextAid = Math.floor(audioElem.getAttribute('aid'))+1;
