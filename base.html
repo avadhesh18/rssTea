@@ -234,10 +234,11 @@ document.addEventListener('DOMContentLoaded', function() {
         type: "image/png",
       },
       {
-        src: closestPost.querySelector('img').src;
+        src: closestPost.querySelector('img').src,
       },      
     ],
  }); 
+   
    
   const totalAids = document.querySelectorAll('[data-aid]').length;
   let nextAid = Math.floor(audioElem.getAttribute('aid'))+1;
