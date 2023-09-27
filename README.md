@@ -18,11 +18,6 @@ rssTea is a lightweight web application that allows you to read RSS feeds and li
 2. Enable Github pages on your repo and select deply from "Github Actions".
 3. Access your personalised RSS Reader and Podcast Player on https://yourusername.github.io/rssTea
 
-
-### Deployment
-
-1. Host the PHP code and front-end HTML on a web server or GitHub Pages.
-
 This project is available under the GNU GPL License.
 
 ---
