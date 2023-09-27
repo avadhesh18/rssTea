@@ -12,3 +12,4 @@ https://feeds.simplecast.com/54nAGcIl
 https://feeds.simplecast.com/AeLYwXNc
 https://wordpress.org/news/feed/podcast
 https://codegolf.stackexchange.com/feeds
+https://feeds.macrumors.com/MacRumors-All
