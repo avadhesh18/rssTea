@@ -1,4 +1,4 @@
-name: Fetch new feeds and push content to Github Pages
+name: Fetch new feeds
 
 on:
   # Runs on pushes targeting the default branch
@@ -41,14 +41,11 @@ jobs:
   # Single deploy job since we're just deploying
   deploy:
     environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      name: update repository
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
       - name: Run feeds.php
         run: php feeds.php
       - name: Commit files # transfer the new html files back into the repository
@@ -61,12 +58,4 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          force: true     
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          # Upload entire repository
-          path: './public'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+          force: true
