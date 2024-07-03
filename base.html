@@ -270,28 +270,28 @@ document.addEventListener('DOMContentLoaded', function ()
         caudio.play();
 
         document.getElementById('speed').innerText = caudio.playbackRate + 'x';
-        const mediaAlbumArt = 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=' + encodeURIComponent(closestPost.querySelector('img').src) + '&container=focus';
+        const mediaAlbumArt = 'https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=' + encodeURIComponent(closestPost.querySelector('img').src) + '&container=ig';
         navigator.mediaSession.metadata = new MediaMetadata(
         {
             title: h2text,
             artist: closestPost.querySelector('.channel').textContent,
             album: "rssTea",
             artwork: [
-            {
-                src: mediaAlbumArt + '&resize_w=128&resize_h=128',
-                sizes: "128x128",
-                type: "image/png",
-            },
-            {
-                src: mediaAlbumArt + '&resize_w=96&resize_h=96',
-                sizes: "96x96",
-                type: "image/png",
-            },
-            {
-                src: mediaAlbumArt + '&resize_w=192&resize_h=192',
-                sizes: "192x192",
-                type: "image/png",
-            },
+        //    {
+        //        src: mediaAlbumArt + '&resize_w=128&resize_h=128',
+        //        sizes: "128x128",
+        //        type: "image/png",
+        //    },
+        //    {
+        //        src: mediaAlbumArt + '&resize_w=96&resize_h=96',
+        //        sizes: "96x96",
+        //        type: "image/png",
+        //    },
+        //    {
+        //        src: mediaAlbumArt + '&resize_w=192&resize_h=192',
+        //        sizes: "192x192",
+        //        type: "image/png",
+        //    },
             {
                 src: closestPost.querySelector('img').src,
             }, ],
