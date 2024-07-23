@@ -407,3 +407,42 @@ h2 {
     line-height: 30px;
 }
 }
+.pclogo {display:none;}
+@media (min-width:  720px) {
+{
+  div#filter {
+    position: fixed;
+    left: 0;
+    top: 0px;
+    width: 200px;
+    border-radius: 0px;
+    background: #e9f2fb;
+    height: 100vh;
+    height: 100%;
+    border-right: 1px solid var(--grey);
+}
+
+span.tab {
+    display: block;
+    cursor: pointer;
+}
+
+div#wrap {
+    padding-left: 200px;
+}
+
+span#filters {
+    display: block;
+    margin-top: 30px;
+}
+
+div#header {
+    display: none;
+}
+
+.pclogo {
+    padding: 20px 0px 0px 0px;
+    display: block;
+    font-size: 1.2em;
+}
+}
