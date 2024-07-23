@@ -420,20 +420,27 @@ h2 {
     height: 100vh;
     height: 100%;
     border-right: 1px solid var(--grey);
+        padding: 0px;
 }
 
 span.tab {
     display: block;
     cursor: pointer;
+      background: transparent;
+  padding:10px;
 }
 
 div#wrap {
-    padding-left: 200px;
+      padding-left: 220px;
+    padding-top: 20px;
+    padding-right: 20px;
 }
 
 span#filters {
     display: block;
-    margin-top: 30px;
+    margin-top: 20px;
+    background: transparent;
+    border: none;
 }
 
 div#header {
@@ -444,5 +451,32 @@ div#header {
     padding: 20px 0px 0px 0px;
     display: block;
     font-size: 1.2em;
+}
+  span.tab.active {
+    background: var(--lightgrey);
+      border-radius: 0px;
+      padding:10px;
+}
+
+select {
+    background: transparent;
+    padding:10px;
+      display: block;
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+}
+
+select.selected {
+    background: var(--lightgrey);
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+  border-radius:none;
+}
+  
+span.tab:hover,select:hover {
+    background: var(--lightgrey);
 }
 }
