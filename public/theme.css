@@ -409,19 +409,21 @@ h2 {
 }
 .pclogo {display:none;}
 @media (min-width:  720px) {
-
+div#pcwrap {
+    display: flex;
+    max-width: 1024px;
+    margin: 0 auto;
+}
   div#filter {
-    position: fixed;
-    left: 0;
+ left: 0;
     top: 0px;
     width: 200px;
     border-radius: 0px;
-    background: #e9f2fb;
-    background: var(--white);
     height: 100vh;
     height: 100%;
     border-right: 1px solid var(--grey);
-        padding: 0px;
+    padding: 0px;
+    position: sticky;
 }
 
 span.tab {
@@ -432,9 +434,9 @@ span.tab {
 }
 
 div#wrap {
-      padding-left: 220px;
-    padding-top: 20px;
-    padding-right: 20px;
+  flex: 1;
+    max-width: 100%;
+    padding: 20px;
 }
 
 span#filters {
