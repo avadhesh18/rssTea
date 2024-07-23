@@ -409,7 +409,7 @@ h2 {
 }
 .pclogo {display:none;}
 @media (min-width:  720px) {
-{
+
   div#filter {
     position: fixed;
     left: 0;
