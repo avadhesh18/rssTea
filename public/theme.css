@@ -417,6 +417,7 @@ h2 {
     width: 200px;
     border-radius: 0px;
     background: #e9f2fb;
+    background: var(--white);
     height: 100vh;
     height: 100%;
     border-right: 1px solid var(--grey);
