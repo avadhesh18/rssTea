@@ -1,5 +1,4 @@
 name: Fetch new feeds and push content to Github Pages
-
 on:
   # Runs on pushes targeting the default branch
   push:
@@ -7,38 +6,33 @@ on:
     paths:
       - 'feeds.php'
       - 'base.html'
-
   schedule:
-  - cron: '0 */2 * * *'
-
-
+    - cron: '0 */24 * * *'  # Runs every 2 hours
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+# Sets permissions of the GITHUB_TOKEN
 permissions:
- id-token: write
- contents: write
- actions: write
- checks: write
- deployments: write
- discussions: write
- issues: write
- pages: write
- packages: write
- pull-requests: write
- repository-projects: write
- security-events: write
- statuses: write
+  id-token: write
+  contents: write
+  actions: write
+  checks: write
+  deployments: write
+  discussions: write
+  issues: write
+  pages: write
+  packages: write
+  pull-requests: write
+  repository-projects: write
+  security-events: write
+  statuses: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+# Allow only one concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
   deploy:
     environment:
       name: github-pages
@@ -46,30 +40,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Updated to v4
+      
       - name: Setup Pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v4  # Updated to v4
+      
       - name: Run feeds.php
         run: php feeds.php
-      - name: Commit files # transfer the new html files back into the repository
+      
+      - name: Commit files
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add --all
-          git commit -m "Updating the repository"
-      - name: Push changes # push the output folder to your repo
+          git commit -m "Updating the repository" || echo "No changes to commit"
+      
+      - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          force: true     
+          force: true
+      
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v3  # Updated to v3
         with:
-          # Upload entire repository
           path: './public'
-          name: my-site
+      
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
-        with:
-          artifact_name: my-site
+        uses: actions/deploy-pages@v4  # Updated to v4
