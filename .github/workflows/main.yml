@@ -72,4 +72,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v2
         with:
-          artifact-name: my-site
+          artifact_name: my-site
